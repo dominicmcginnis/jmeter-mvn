@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <groupId>org.irishhombre</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jmetercli</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Jmeter CLI</name>
+
+  <properties>
+	  <jmeter.home>/User/rmcginnis/opt/apache-jmeter-2.8</jmeter.home>
+  </properties>
+
+  <build>
+  	<finalName>${project.artifactId}-${project.version}</finalName>
+   <plugins>
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+       	<artifactId>chronos-jmeter-maven-plugin</artifactId>
+        <version>1.1.0</version>
+        <configuration>
+    			<input>${basedir}/src/test/release</input>
+    			<jmeterHome>${jmeter.home}</jmeterHome>
+          <sysproperties>
+              <java.awt.headless>true</java.awt.headless>
+          </sysproperties>
+    			<heap>756m</heap>
+          <responsetime95>400</responsetime95>
+          <stopOnFailed>false</stopOnFailed>	
+          <dataid>release</dataid>									
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+         		<goal>jmeter</goal>
+		        <goal>check</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+	</plugins>	
+  </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+        				<artifactId>chronos-report-maven-plugin</artifactId>
+                <version>1.1.0</version>
+            </plugin>
+         </plugins>
+    </reporting>
+
+   <developers>
+  	<developer>
+  		<id>dmcginnis</id>
+  		<name>Dominic McGinnis</name>
+  		<email>dominicmcginnis@gmail.com</email>
+  		<organization>${project.organization.name}</organization>
+  		<organizationUrl>${project.organization.url}</organizationUrl>
+  		<roles>
+  			<role>developer</role>
+  		</roles>		
+	 </developer>
+  </developers>
+
+</project>
