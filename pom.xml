@@ -9,6 +9,9 @@
 
   <properties>
 	  <jmeter.home>/User/rmcginnis/opt/apache-jmeter-2.8</jmeter.home>
+    <jmeter.tests.dir>${basedir}/src/test/release</jmeter.tests.dir>
+    <jmeter.tests.templates.dir>${basedir}/src/test/templates</jmeter.tests.templates.dir>
+    <jmeter.test.hostname>srwe03.com</jmeter.test.hostname>
   </properties>
 
   <build>
@@ -16,18 +19,40 @@
    <plugins>
     <plugin>
       <groupId>org.codehaus.mojo</groupId>
-       	<artifactId>chronos-jmeter-maven-plugin</artifactId>
-        <version>1.1.0</version>
-        <configuration>
-    			<input>${basedir}/src/test/release</input>
-    			<jmeterHome>${jmeter.home}</jmeterHome>
-          <sysproperties>
-              <java.awt.headless>true</java.awt.headless>
-          </sysproperties>
-    			<heap>756m</heap>
-          <responsetime95>400</responsetime95>
-          <stopOnFailed>false</stopOnFailed>	
-          <dataid>release</dataid>									
+      <artifactId>exec-maven-plugin</artifactId>
+      <version>1.2.1</version>
+      <executions>
+        <execution>
+           <id>Jmeter Setup</id>
+           <!-- phase>prepare-package</phase -->
+           <goals>
+             <goal>exec</goal>
+           </goals>
+        </execution>
+      </executions>
+      <configuration>
+        <executable>${basedir}/src/test/scripts/prepJmeterTests.sh</executable>
+        <arguments>
+           <argument>${jmeter.tests.dir}</argument>
+           <argument>${jmeter.tests.templates.dir}</argument>
+           <argument>${jmeter.test.hostname}</argument>
+        </arguments>
+      </configuration>
+    </plugin>    
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+     	<artifactId>chronos-jmeter-maven-plugin</artifactId>
+      <version>1.1.0</version>
+      <configuration>
+  			<input>${jmeter.tests.dir}</input>
+  			<jmeterHome>${jmeter.home}</jmeterHome>
+        <sysproperties>
+            <java.awt.headless>true</java.awt.headless>
+        </sysproperties>
+  			<heap>756m</heap>
+        <responsetime95>400</responsetime95>
+        <stopOnFailed>false</stopOnFailed>	
+        <dataid>release</dataid>									
       </configuration>
       <executions>
         <execution>
