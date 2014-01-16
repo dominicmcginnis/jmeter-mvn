@@ -11,7 +11,7 @@
 	  <jmeter.home>/User/rmcginnis/opt/apache-jmeter-2.8</jmeter.home>
     <jmeter.tests.dir>${basedir}/src/test/release</jmeter.tests.dir>
     <jmeter.tests.templates.dir>${basedir}/src/test/templates</jmeter.tests.templates.dir>
-    <jmeter.test.hostname>srwe03.com</jmeter.test.hostname>
+    <jmeter.test.hostname>srwd62.com</jmeter.test.hostname>
   </properties>
 
   <build>
